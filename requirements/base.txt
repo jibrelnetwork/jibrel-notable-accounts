@@ -1,0 +1,9 @@
+aiohttp==3.4.4
+backoff==1.8.0
+ConfigArgParse==0.13.0
+cssselect
+lxml==4.2.1
+prometheus-client==0.7.1
+python-json-logger==0.1.11
+requests==2.18.4
+sentry-sdk==0.5.2
