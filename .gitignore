@@ -5,6 +5,10 @@
 # Python cache.
 __pycache__
 
+# Locally overriden Docker Compose settings.
+docker-compose.override.yml
+
 
 # Settings and configuration.
+!.dockerignore
 !.gitignore
