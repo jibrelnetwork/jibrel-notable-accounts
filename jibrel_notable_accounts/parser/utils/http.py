@@ -8,7 +8,7 @@ import requests
 from typing import Optional, Dict
 
 from jibrel_notable_accounts import settings
-from jibrel_notable_accounts.utils.proxy import get_cooled_proxy
+from jibrel_notable_accounts.parser.utils.proxy import get_cooled_proxy
 
 logger = logging.getLogger(__name__)
 

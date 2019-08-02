@@ -12,8 +12,10 @@ from concurrent import futures
 from typing import List, Any, Tuple, DefaultDict, Dict, Set
 
 from jibrel_notable_accounts import settings
-from jibrel_notable_accounts.utils import http, parsing
-from jibrel_notable_accounts.utils.structs import AccountList, NotableAccount, RawNotableAccount
+from jibrel_notable_accounts.parser.utils import parsing
+from jibrel_notable_accounts.parser.utils import http
+
+from jibrel_notable_accounts.parser.utils.structs import AccountList, NotableAccount, RawNotableAccount
 
 logger = logging.getLogger(__name__)
 

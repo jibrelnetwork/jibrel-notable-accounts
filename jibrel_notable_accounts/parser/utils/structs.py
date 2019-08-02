@@ -1,4 +1,4 @@
-from typing import NamedTuple, Tuple, Any, Dict
+from typing import NamedTuple, Tuple
 
 
 class RawNotableAccount(NamedTuple):
@@ -13,13 +13,6 @@ class NotableAccount(NamedTuple):
     address: str
     name: str
     labels: Tuple[str, ...]
-
-    def as_dict(self) -> Dict[str, Any]:
-        return {
-            'address': self.address,
-            'name': self.name,
-            'labels': list(self.labels),
-        }
 
 
 class AccountList(NamedTuple):
