@@ -12,4 +12,5 @@ docker-compose.override.yml
 # Settings and configuration.
 !.coveragerc
 !.dockerignore
+!.flake8
 !.gitignore
