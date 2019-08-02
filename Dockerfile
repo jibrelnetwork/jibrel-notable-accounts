@@ -26,7 +26,7 @@ RUN apk add --no-cache libxml2 libxslt \
  && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
  && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-RUN pip install --no-cache-dir -r requirements/base.txt $(test "$ENVIRONMENT" == "development" && echo "-r requirements/base.txt") \
+RUN pip install --no-cache-dir -r requirements/base.txt $(test "$ENVIRONMENT" == "development" && echo "-r requirements/dev.txt") \
  && apk --purge del .build-deps \
  && rm -rf /var/cache/apk/*
 
