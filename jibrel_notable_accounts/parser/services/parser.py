@@ -20,14 +20,14 @@ from jibrel_notable_accounts.parser.utils.structs import AccountList, NotableAcc
 logger = logging.getLogger(__name__)
 
 
-class NotableAccountsParser(mode.Service):
+class ParserService(mode.Service):
     FIRST_PAGE_NUMBER = 1
 
     ACCOUNTS_LIST_URL_XPATH = "//div[@class='dropdown']/div/a[contains(text(), 'Accounts')]"
     ACCOUNT_ROW_XPATH = "//table/tbody/tr[td and not(td/div[text() = 'There are no matching entries'])]"
 
     def __init__(self, **kwargs: Any) -> None:
-        super(NotableAccountsParser, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
         self.executor = futures.ThreadPoolExecutor(max_workers=settings.REQUESTS_MAX_WORKERS)
 

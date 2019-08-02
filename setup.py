@@ -14,4 +14,9 @@ setup(
     platforms="any",
     install_requires=[],
     include_package_data=True,
+    entry_points={
+        "console_scripts": [
+            "jibrel-notable-accounts-parser = jibrel_notable_accounts.parser.__main__:main",
+        ]
+    }
 )
