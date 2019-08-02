@@ -14,14 +14,14 @@ def css_to_xpath(css_selector: str) -> GenericTranslator:
 
 def get_cleaned_text(el: lxml.etree.Element) -> str:
     """
-    >>> get_cleaned_text(lxml.html.fromstring("<span>Some text inside.</span>"))
-    "Some text inside."
-    >>> get_cleaned_text(lxml.html.fromstring("<div>Some <span>nested</span> text.</div>"))
-    "Some nested text."
-    >>> get_cleaned_text(lxml.html.fromstring(r"<div>    Text with whitespace.\t\t</div>"))
-    "Text with whitespace."
-    >>> get_cleaned_text(lxml.html.fromstring(r"<div>Text&nbsp;with&nbsp;non-breakable&nbsp;spaces.</div>"))
-    "Text with non-breakable spaces."
+    >>> get_cleaned_text(lxml.html.fromstring(r'<span>Some text inside.</span>'))
+    'Some text inside.'
+    >>> get_cleaned_text(lxml.html.fromstring(r'<div>Some <span>nested</span> text.</div>'))
+    'Some nested text.'
+    >>> get_cleaned_text(lxml.html.fromstring(r'<div>    Text with whitespace.\t\t</div>'))
+    'Text with whitespace.'
+    >>> get_cleaned_text(lxml.html.fromstring(r'<div>Text&nbsp;with&nbsp;non-breakable&nbsp;spaces.</div>'))
+    'Text with non-breakable spaces.'
     """
     text = lxml.etree.XPath("string()")(el)
     text = text.replace(LATIN_1_NBSP, " ")
