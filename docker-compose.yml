@@ -1,6 +1,11 @@
 version: "3.7"
 
 services:
+  parser:
+    build:
+      context: .
+    image: jibrel/notable-accounts-parser
+    command: jibrel-notable-accounts-parser
   dev:
     build:
       args:
