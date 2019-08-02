@@ -3,7 +3,9 @@ FROM python:3.7-alpine
 ARG ENVIRONMENT="production"
 
 ENV ENVIRONMENT=${ENVIRONMENT} \
-    DOCKERIZE_VERSION="v0.6.1"
+    DOCKERIZE_VERSION="v0.6.1" \
+    PROXY_PASS="" \
+    PROXY_USER=""
 
 RUN addgroup -S -g 1000 app \
  && adduser -S -u 1000 -G app -s /bin/sh -D app \
