@@ -1,0 +1,10 @@
+# System files.
+.*
+*~
+
+# Python cache.
+__pycache__
+
+
+# Settings and configuration.
+!.gitignore
