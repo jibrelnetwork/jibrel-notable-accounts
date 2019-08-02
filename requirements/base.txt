@@ -3,6 +3,7 @@ backoff==1.8.0
 ConfigArgParse==0.13.0
 cssselect
 lxml==4.2.1
+mode==4.0.1
 prometheus-client==0.7.1
 python-json-logger==0.1.11
 requests==2.18.4
