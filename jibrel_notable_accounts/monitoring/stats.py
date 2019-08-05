@@ -2,10 +2,10 @@ import asyncio
 import logging
 import prometheus_client
 
-from typing import Callable, Awaitable, Any, List
+from typing import Callable, Awaitable, Any
 
 from jibrel_notable_accounts import settings
-from jibrel_notable_accounts.parser.utils.proxy import Proxy, proxies
+from jibrel_notable_accounts.parser.utils.proxy import proxies
 
 logger = logging.getLogger(__name__)
 

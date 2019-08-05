@@ -12,7 +12,7 @@ from jibrel_notable_accounts.parser.service import ParserService
 @click.command()
 @click.option('--log-level', default=settings.LOG_LEVEL, help="Log level")
 @click.option('--no-json-formatter', is_flag=True, default=settings.NO_JSON_FORMATTER, help='Use default formatter')
-def main(log_level, no_json_formatter) -> None:
+def main(log_level: str, no_json_formatter: bool) -> None:
     sentry_sdk.init(settings.RAVEN_DSN)
     setup_parser_metrics()
 
