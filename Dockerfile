@@ -3,7 +3,11 @@ FROM python:3.7-alpine
 ARG ENVIRONMENT="production"
 
 ENV ENVIRONMENT=${ENVIRONMENT} \
-    DOCKERIZE_VERSION="v0.6.1"
+    DOCKERIZE_VERSION="v0.6.1" \
+    NOTABLE_ACCOUNTS_PARSE_ONCE_DELAY="300" \
+    PROXY_PASS="" \
+    PROXY_USER="" \
+    REQUESTS_MAX_WORKERS="10"
 
 RUN addgroup -S -g 1000 app \
  && adduser -S -u 1000 -G app -s /bin/sh -D app \

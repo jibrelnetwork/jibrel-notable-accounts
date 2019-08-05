@@ -1,6 +1,9 @@
 shell:
 	docker-compose run --rm dev sh
 
+build:
+	@docker-compose build
+
 mypy:
 	@docker-compose run --rm dev mypy .
 
@@ -14,4 +17,3 @@ validate:
 	make lint
 	make mypy
 	make test
-

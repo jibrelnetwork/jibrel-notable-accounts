@@ -25,6 +25,8 @@ docker-compose build
 ## Configuration
 All environmental variables with its' defaults can be found in the `Dockerfile`.
 
+> Credentials for **Proxyrack** can be found in company's **1Password** vault.
+
 
 ## Devtools
 
