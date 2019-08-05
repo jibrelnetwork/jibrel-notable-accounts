@@ -29,8 +29,8 @@ def _safe_health(func: HealthChecker) -> HealthChecker:
 
 
 @_safe_health
-async def is_proxy_healthy(proxy_list: List[Proxy]) -> bool:
-    proxies_count = len(proxy_list)
+async def is_proxy_healthy() -> bool:
+    proxies_count = len(proxies)
     proxies_faulty_count = get_proxies_faulty_count()
     proxy_health = round(1 - proxies_faulty_count / proxies_count, 2)
 
