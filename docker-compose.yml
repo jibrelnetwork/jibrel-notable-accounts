@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  dev:
+    build:
+      args:
+        ENVIRONMENT: development
+      context: .
+    image: jibrel/notable-accounts-dev
+    volumes:
+    - ./:/app

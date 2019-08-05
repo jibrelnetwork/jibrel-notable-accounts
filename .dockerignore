@@ -1,0 +1,11 @@
+# System files.
+.*
+*~
+
+# Python cache.
+__pycache__
+
+# Docker-related files.
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml

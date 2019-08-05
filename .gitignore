@@ -1,0 +1,15 @@
+# System files.
+.*
+*~
+
+# Python cache.
+__pycache__
+
+# Locally overriden Docker Compose settings.
+docker-compose.override.yml
+
+
+# Settings and configuration.
+!.coveragerc
+!.dockerignore
+!.gitignore
