@@ -1,7 +1,8 @@
 import click
 import mode
+import sentry_sdk
 
-from jibrel_notable_accounts import settings
+from jibrel_notable_accounts import settings, logs
 from jibrel_notable_accounts.monitoring.app import make_app
 from jibrel_notable_accounts.monitoring.service import ApiService
 from jibrel_notable_accounts.monitoring.stats import setup_parser_metrics
@@ -9,12 +10,20 @@ from jibrel_notable_accounts.parser.service import ParserService
 
 
 @click.command()
-def main() -> None:
+@click.option('--log-level', default=settings.LOG_LEVEL, help="Log level")
+@click.option('--no-json-formatter', is_flag=True, default=settings.NO_JSON_FORMATTER, help='Use default formatter')
+def main(log_level, no_json_formatter) -> None:
+    sentry_sdk.init(settings.RAVEN_DSN)
     setup_parser_metrics()
 
     mode.Worker(
         ParserService(),
         ApiService(port=settings.API_PORT_PARSER, app_maker=make_app),
+        loglevel=log_level,
+        logging_config=logs.get_config(
+            log_level=log_level,
+            formatter_class=logs.get_formatter_class(no_json_formatter),
+        )
     ).execute_from_commandline()
 
 
