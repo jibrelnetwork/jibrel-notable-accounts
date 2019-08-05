@@ -1,5 +1,3 @@
-import functools
-
 import asyncio
 import logging
 import prometheus_client

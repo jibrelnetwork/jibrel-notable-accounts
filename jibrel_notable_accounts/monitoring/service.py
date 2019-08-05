@@ -8,10 +8,10 @@ AppMaker = Callable[[AbstractEventLoop], web.Application]
 
 
 class ApiService(mode.Service):
-    def __init__(self, port: int, app_maker: AppMaker, *args: Any, **kwargs: Any) -> None:
+    def __init__(self, port: int, app_maker: AppMaker, **kwargs: Any) -> None:
         self.port = port
 
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
 
         self.app = app_maker(self.loop)
         self.runner = web.AppRunner(self.app)

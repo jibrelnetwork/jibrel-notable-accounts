@@ -9,7 +9,7 @@ from jibrel_notable_accounts.parser.service import ParserService
 
 
 @click.command()
-def main():
+def main() -> None:
     setup_parser_metrics()
 
     mode.Worker(

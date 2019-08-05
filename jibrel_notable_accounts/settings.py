@@ -31,7 +31,7 @@ METRIC_PARSER_PROXY_TOTAL = 'jibrel_notable_accounts_parser_proxy_total'
 METRIC_PARSER_PROXY_FAULTY_TOTAL = 'jibrel_notable_accounts_parser_proxy_faulty_total'
 
 
-API_PORT_PARSER = os.environ['API_PORT_PARSER']
+API_PORT_PARSER = int(os.environ['API_PORT_PARSER'])
 
 
 HEALTH_THRESHOLD_PROXY = 0.7
