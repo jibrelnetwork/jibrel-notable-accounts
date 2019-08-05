@@ -7,6 +7,10 @@ PROJECT_DIR = BASE_DIR / 'jibrel_notable_accounts'
 PROXY_LIST_PATH = PROJECT_DIR / 'proxy.list'
 USER_AGENT_LIST_PATH = PROJECT_DIR / 'useragents.list'
 
+LOG_LEVEL = os.environ['LOG_LEVEL']
+NO_JSON_FORMATTER = bool(int(os.environ['NO_JSON_FORMATTER']))
+
+RAVEN_DSN = os.environ['RAVEN_DSN']
 
 NOTABLE_ACCOUNTS_PARSE_ONCE_DELAY = int(os.environ['NOTABLE_ACCOUNTS_PARSE_ONCE_DELAY'])
 REQUESTS_MAX_WORKERS = int(os.environ['REQUESTS_MAX_WORKERS'])
@@ -24,3 +28,15 @@ PROXY_PASS = os.environ['PROXY_PASS']
 PROXY_LIST = [p.strip() for p in open(PROXY_LIST_PATH, 'r').readlines()]
 
 USER_AGENT_LIST = [u.strip() for u in open(USER_AGENT_LIST_PATH, 'r').readlines()]
+
+
+METRIC_PARSER_LOOP_TASKS_TOTAL = 'jibrel_notable_accounts_parser_loop_tasks_total'
+METRIC_PARSER_PROXY_TOTAL = 'jibrel_notable_accounts_parser_proxy_total'
+METRIC_PARSER_PROXY_FAULTY_TOTAL = 'jibrel_notable_accounts_parser_proxy_faulty_total'
+
+
+API_PORT_PARSER = int(os.environ['API_PORT_PARSER'])
+
+
+HEALTH_THRESHOLD_PROXY = 0.7
+HEALTH_THRESHOLD_LOOP_TASKS_COUNT = 10000
