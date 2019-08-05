@@ -4,11 +4,14 @@ import mode
 from jibrel_notable_accounts import settings
 from jibrel_notable_accounts.monitoring.app import make_app
 from jibrel_notable_accounts.monitoring.service import ApiService
+from jibrel_notable_accounts.monitoring.stats import setup_parser_metrics
 from jibrel_notable_accounts.parser.service import ParserService
 
 
 @click.command()
 def main():
+    setup_parser_metrics()
+
     mode.Worker(
         ParserService(),
         ApiService(port=settings.API_PORT_PARSER, app_maker=make_app),
