@@ -24,3 +24,11 @@ PROXY_PASS = os.environ['PROXY_PASS']
 PROXY_LIST = [p.strip() for p in open(PROXY_LIST_PATH, 'r').readlines()]
 
 USER_AGENT_LIST = [u.strip() for u in open(USER_AGENT_LIST_PATH, 'r').readlines()]
+
+
+METRIC_PARSER_LOOP_TASKS_TOTAL = 'jibrel_notable_accounts_parser_loop_tasks_total'
+METRIC_PARSER_PROXY_TOTAL = 'jibrel_notable_accounts_parser_proxy_total'
+METRIC_PARSER_PROXY_FAULTY_TOTAL = 'jibrel_notable_accounts_parser_proxy_faulty_total'
+
+
+API_PORT_PARSER = os.environ['API_PORT_PARSER']
