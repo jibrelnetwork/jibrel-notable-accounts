@@ -5,7 +5,7 @@ import prometheus_client
 from typing import Callable, Awaitable, Any
 
 from jibrel_notable_accounts import settings
-from jibrel_notable_accounts.parser.utils.proxy import proxies
+from jibrel_notable_accounts.parser.utils import proxy
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ def _safe_health(func: HealthChecker) -> HealthChecker:
 
 @_safe_health
 async def is_proxy_healthy() -> bool:
-    proxies_count = len(proxies)
+    proxies_count = len(proxy.proxies)
     proxies_faulty_count = get_proxies_faulty_count()
     proxy_health = round(1 - proxies_faulty_count / proxies_count, 2)
 
@@ -43,7 +43,7 @@ async def is_loop_healthy() -> bool:
 
 
 def get_proxies_faulty_count() -> int:
-    proxies_faulty = [p for p in proxies if p.err > 0]
+    proxies_faulty = [p for p in proxy.proxies if p.err > 0]
     proxies_faulty_count = len(proxies_faulty)
 
     return proxies_faulty_count
@@ -62,7 +62,7 @@ def _setup_loop_tasks_total_metric(name: str) -> None:
 
 def _setup_proxy_total_metric(name: str) -> None:
     proxy_total = prometheus_client.Gauge(name, 'Total amount of proxies.')
-    proxy_total.set(len(proxies))
+    proxy_total.set(len(proxy.proxies))
 
 
 def _setup_proxy_faulty_total_metrics(name: str) -> None:
