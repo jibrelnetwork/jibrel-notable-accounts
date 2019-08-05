@@ -1,22 +1,24 @@
 import prometheus_client
 from aiohttp import web
 
+from jibrel_notable_accounts.monitoring import stats
+
 
 async def healthcheck(request: web.Request) -> web.Response:
-    is_proxy_healthy = True
-    is_loop_healthy = True
+    proxy_is_healthy = await stats.is_proxy_healthy()
+    loop_is_healthy = await stats.is_loop_healthy()
 
     healthy = all(
         (
-            is_proxy_healthy,
-            is_loop_healthy,
+            proxy_is_healthy,
+            loop_is_healthy,
         )
     )
 
     data = {
         'healthy': healthy,
-        'isProxyHealthy': is_proxy_healthy,
-        'isLoopHealthy': is_loop_healthy,
+        'isProxyHealthy': proxy_is_healthy,
+        'isLoopHealthy': loop_is_healthy,
     }
 
     status = 200 if healthy else 400
