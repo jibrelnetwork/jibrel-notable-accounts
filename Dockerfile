@@ -12,7 +12,8 @@ ENV API_PORT_PARSER="8080" \
     PROXY_PASS="" \
     PROXY_USER="" \
     RAVEN_DSN="" \
-    REQUESTS_MAX_WORKERS="10"
+    REQUESTS_MAX_WORKERS="10" \
+    UPDATE_IF_EXISTS="1"
 
 RUN addgroup -S -g 1000 app \
  && adduser -S -u 1000 -G app -s /bin/sh -D app \

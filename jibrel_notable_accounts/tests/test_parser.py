@@ -438,7 +438,7 @@ async def test_parser_does_not_override_an_item_if_requested(
 
 @pytest.mark.asyncio
 async def test_parser_overrides_an_item_if_requested(
-        parser: ParserService,
+        parser_with_override: ParserService,
         sa_engine: Engine,
 ) -> None:
     async with sa_engine.acquire() as conn:
@@ -450,7 +450,7 @@ async def test_parser_overrides_an_item_if_requested(
             },
         ))
 
-    await parser.write_accounts(
+    await parser_with_override.write_accounts(
         [
             NotableAccount(
                 address='0x4b1a99467a284cc690e3237bc69105956816f762',

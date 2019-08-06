@@ -24,7 +24,7 @@ async def truncate_db(sa_engine: Engine) -> AsyncGenerator[None, None]:
     tables = ",".join([table.name for table in TABLES])
 
     async with sa_engine.acquire() as conn:
-        conn.execute(f"TRUNCATE {tables};")
+        await conn.execute(f"TRUNCATE {tables};")
 
 
 @pytest.mark.asyncio

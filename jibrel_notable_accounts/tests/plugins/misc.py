@@ -3,6 +3,7 @@ from asyncio import AbstractEventLoop
 from concurrent.futures.thread import ThreadPoolExecutor
 
 from aiohttp.test_utils import TestClient
+from jibrel_notable_accounts import settings
 from pytest_mock import MockFixture
 
 from jibrel_notable_accounts.monitoring.app import make_app
@@ -17,10 +18,27 @@ from jibrel_notable_accounts.tests.plugins.types import AiohttpClient, SettingsO
 
 @pytest.fixture
 async def parser(loop: AbstractEventLoop) -> AsyncGenerator[ParserService, None]:
-    parser = ParserService(loop=loop)
+    parser = ParserService(db_dsn=settings.DB_DSN, update_if_exists=False, loop=loop)
 
     await parser.on_start()
+    await parser.database.on_start()
+
     yield parser
+
+    await parser.database.on_stop()
+    await parser.on_stop()
+
+
+@pytest.fixture
+async def parser_with_override(loop: AbstractEventLoop) -> AsyncGenerator[ParserService, None]:
+    parser = ParserService(db_dsn=settings.DB_DSN, update_if_exists=True, loop=loop)
+
+    await parser.on_start()
+    await parser.database.on_start()
+
+    yield parser
+
+    await parser.database.on_stop()
     await parser.on_stop()
 
 

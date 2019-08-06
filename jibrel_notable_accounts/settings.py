@@ -9,6 +9,7 @@ USER_AGENT_LIST_PATH = PROJECT_DIR / 'useragents.list'
 
 LOG_LEVEL = os.environ['LOG_LEVEL']
 NO_JSON_FORMATTER = bool(int(os.environ['NO_JSON_FORMATTER']))
+UPDATE_IF_EXISTS = bool(int(os.environ['UPDATE_IF_EXISTS']))
 
 DB_DSN = os.environ['DB_DSN']
 RAVEN_DSN = os.environ['RAVEN_DSN']
