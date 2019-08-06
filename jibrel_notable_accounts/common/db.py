@@ -1,3 +1,5 @@
+from typing import Any
+
 import backoff
 import mode
 
@@ -8,7 +10,7 @@ from sqlalchemy.exc import OperationalError
 class DatabaseService(mode.Service):
     engine: sa.Engine
 
-    def __init__(self, dsn, **kwargs):
+    def __init__(self, dsn: str, **kwargs: Any) -> None:
         self.dsn = dsn
 
         super().__init__(**kwargs)
