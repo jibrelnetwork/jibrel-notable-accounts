@@ -5,6 +5,8 @@ services:
     build:
       context: .
     image: jibrel/notable-accounts-parser
+    environment:
+      DB_DSN: postgres://postgres:postgres@db:5432/db
     command: jibrel-notable-accounts-parser
 
   dev:

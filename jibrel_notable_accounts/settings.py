@@ -10,6 +10,7 @@ USER_AGENT_LIST_PATH = PROJECT_DIR / 'useragents.list'
 LOG_LEVEL = os.environ['LOG_LEVEL']
 NO_JSON_FORMATTER = bool(int(os.environ['NO_JSON_FORMATTER']))
 
+DB_DSN = os.environ['DB_DSN']
 RAVEN_DSN = os.environ['RAVEN_DSN']
 
 NOTABLE_ACCOUNTS_PARSE_ONCE_DELAY = int(os.environ['NOTABLE_ACCOUNTS_PARSE_ONCE_DELAY'])

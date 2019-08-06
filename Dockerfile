@@ -3,6 +3,7 @@ FROM python:3.7-alpine
 ARG ENVIRONMENT="production"
 
 ENV API_PORT_PARSER="8080" \
+    DB_DSN="" \
     DOCKERIZE_VERSION="v0.6.1" \
     ENVIRONMENT=${ENVIRONMENT} \
     LOG_LEVEL="INFO" \
