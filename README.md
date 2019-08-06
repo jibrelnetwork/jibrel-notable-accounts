@@ -34,7 +34,20 @@ All environmental variables with its' defaults can be found in the `Dockerfile`.
 
 To spawn a dev shell, execute:
 ```
-make shell_tests
+make shell
+```
+
+### Migrations
+
+[Alembic](https://alembic.sqlalchemy.org/) is used for managing migrations. To
+create new migration, execute:
+```
+make migrations -m="Migration summary"
+```
+
+To apply migrations, execute:
+```
+make migrate
 ```
 
 ### Code validation
