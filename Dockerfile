@@ -29,13 +29,15 @@ RUN apk add --no-cache libxml2 libxslt \
                 libc-dev \
                 libxml2-dev \
                 libxslt-dev \
-                wget \
+                musl-dev \
                 openssl \
+                postgresql-dev \
+                python3-dev \
+                wget \
  && wget --retry-connrefused https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
  && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
- && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-
-RUN pip install --no-cache-dir -r requirements/base.txt $(test "$ENVIRONMENT" == "development" && echo "-r requirements/dev.txt") \
+ && pip install --no-cache-dir -r requirements/base.txt $(test "$ENVIRONMENT" == "development" && echo "-r requirements/dev.txt") \
+ && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
  && apk --purge del .build-deps \
  && rm -rf /var/cache/apk/*
 
