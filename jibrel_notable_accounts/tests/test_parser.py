@@ -1,8 +1,10 @@
 import pytest
+from aiopg.sa import Engine
 
 from requests_mock import Mocker
 
 from jibrel_notable_accounts import settings
+from jibrel_notable_accounts.common.tables import notable_accounts_t
 from jibrel_notable_accounts.parser.utils.structs import NotableAccount, AccountList
 from jibrel_notable_accounts.tests.plugins.types import HtmlGetter
 
@@ -367,3 +369,105 @@ async def test_parser_dedupes_accounts_and_aggregates_accounts_labels(
         NotableAccount(address='0x03bdf69b1322d623836afbd27679a1c0afa067e9', name='Bitmax 1', labels=('Exchange',)),
         NotableAccount(address='0x4b1a99467a284cc690e3237bc69105956816f762', name='Bitmax 2', labels=('Exchange',)),
     }
+
+
+@pytest.mark.asyncio
+async def test_parser_inserts_a_single_item_to_database(
+        sa_engine: Engine,
+        parser: ParserService,
+) -> None:
+    await parser.write_accounts(
+        [
+            NotableAccount(
+                address='0x4b1a99467a284cc690e3237bc69105956816f762',
+                name='Bitmax 2',
+                labels=('Exchange',)
+            ),
+        ],
+    )
+
+    async with sa_engine.acquire() as conn:
+        in_db = await conn.execute(notable_accounts_t.select())
+        in_db = [dict(item) for item in in_db]
+
+    assert in_db == [
+        {
+            'address': '0x4b1a99467a284cc690e3237bc69105956816f762',
+            'name': 'Bitmax 2',
+            'labels': ['Exchange'],
+        },
+    ]
+
+
+@pytest.mark.asyncio
+async def test_parser_does_not_override_an_item_if_requested(
+        parser: ParserService,
+        sa_engine: Engine,
+) -> None:
+    async with sa_engine.acquire() as conn:
+        await conn.execute(notable_accounts_t.insert().values(
+            {
+                'address': '0x8da0d80f5007ef1e431dd2127178d224e32c2ef4',
+                'name': '0x: Token Transfer Proxy',
+                'labels': ['0x Ecosystem'],
+            },
+        ))
+
+    await parser.write_accounts(
+        [
+            NotableAccount(
+                address='0x8da0d80f5007ef1e431dd2127178d224e32c2ef4',
+                name='NEW NAME FOR A TOKEN',
+                labels=('0x Ecosystem', 'ANOTHER LABEL'),
+            ),
+        ],
+    )
+
+    async with sa_engine.acquire() as conn:
+        in_db = await conn.execute(notable_accounts_t.select())
+        in_db = [dict(item) for item in in_db]
+
+    assert in_db == [
+        {
+            'address': '0x8da0d80f5007ef1e431dd2127178d224e32c2ef4',
+            'name': '0x: Token Transfer Proxy',
+            'labels': ['0x Ecosystem'],
+        },
+    ]
+
+
+@pytest.mark.asyncio
+async def test_parser_overrides_an_item_if_requested(
+        parser: ParserService,
+        sa_engine: Engine,
+) -> None:
+    async with sa_engine.acquire() as conn:
+        await conn.execute(notable_accounts_t.insert().values(
+            {
+                'address': '0x4b1a99467a284cc690e3237bc69105956816f762',
+                'name': 'Bitmax 2',
+                'labels': ['Exchange'],
+            },
+        ))
+
+    await parser.write_accounts(
+        [
+            NotableAccount(
+                address='0x4b1a99467a284cc690e3237bc69105956816f762',
+                name='NEW NAME FOR A TOKEN',
+                labels=('0x Ecosystem', 'ANOTHER LABEL'),
+            ),
+        ],
+    )
+
+    async with sa_engine.acquire() as conn:
+        in_db = await conn.execute(notable_accounts_t.select())
+        in_db = [dict(item) for item in in_db]
+
+    assert in_db == [
+        {
+            'address': '0x4b1a99467a284cc690e3237bc69105956816f762',
+            'name': 'NEW NAME FOR A TOKEN',
+            'labels': ['0x Ecosystem', 'ANOTHER LABEL'],
+        },
+    ]
