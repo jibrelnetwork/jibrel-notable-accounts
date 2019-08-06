@@ -23,7 +23,7 @@ WORKDIR /app
 
 COPY --chown=app:app ./requirements /app/requirements/
 
-RUN apk add --no-cache libxml2 libxslt \
+RUN apk add --no-cache libxml2 libxslt postgresql-libs \
  && apk add --no-cache --virtual .build-deps \
                 gcc \
                 libc-dev \
