@@ -6,6 +6,7 @@ services:
       context: .
     image: jibrel/notable-accounts-parser
     command: jibrel-notable-accounts-parser
+
   dev:
     build:
       args:
@@ -13,4 +14,16 @@ services:
       context: .
     image: jibrel/notable-accounts-dev
     volumes:
-    - ./:/app
+      - ./:/app
+
+  db:
+    image: postgres:11-alpine
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+
+volumes:
+  db:
