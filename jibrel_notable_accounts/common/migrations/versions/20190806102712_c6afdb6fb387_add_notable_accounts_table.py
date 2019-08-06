@@ -1,7 +1,7 @@
 """Add notable accounts table
 
 Revision ID: c6afdb6fb387
-Revises: 
+Revises:
 Create Date: 2019-08-06 10:27:12.315967
 
 """

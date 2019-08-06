@@ -1,5 +1,5 @@
 import logging
-from asyncio import AbstractEventLoop
+from typing import Generator, AsyncGenerator
 
 import pytest
 import alembic.config
@@ -11,14 +11,14 @@ logger = logging.getLogger(__name__)
 
 
 @pytest.fixture(scope='session', autouse=True)
-def setup_db():
+def setup_db() -> Generator[None, None, None]:
     alembic.config.main(['upgrade', 'head'])
     yield
     alembic.config.main(['downgrade', 'base'])
 
 
 @pytest.fixture(autouse=True)
-async def truncate_db(sa_engine: Engine):
+async def truncate_db(sa_engine: Engine) -> AsyncGenerator[None, None]:
     yield
 
     tables = ",".join([table.name for table in TABLES])

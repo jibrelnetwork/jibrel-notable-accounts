@@ -4,7 +4,7 @@ import sys
 
 from logging.config import fileConfig
 
-from sqlalchemy import create_engine, engine_from_config, pool
+from sqlalchemy import create_engine
 
 from alembic import context
 
