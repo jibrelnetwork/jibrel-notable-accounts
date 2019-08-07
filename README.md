@@ -42,7 +42,7 @@ make shell
 [Alembic](https://alembic.sqlalchemy.org/) is used for managing migrations. To
 create new migration, execute:
 ```
-make migrations -m="Migration summary"
+make migrations m="Migration summary"
 ```
 
 To apply migrations, execute:
