@@ -3,6 +3,7 @@ FROM python:3.7-alpine
 ARG ENVIRONMENT="production"
 
 ENV API_PORT_PARSER="8080" \
+    DB_DSN="" \
     DOCKERIZE_VERSION="v0.6.1" \
     ENVIRONMENT=${ENVIRONMENT} \
     LOG_LEVEL="INFO" \
@@ -11,7 +12,8 @@ ENV API_PORT_PARSER="8080" \
     PROXY_PASS="" \
     PROXY_USER="" \
     RAVEN_DSN="" \
-    REQUESTS_MAX_WORKERS="10"
+    REQUESTS_MAX_WORKERS="10" \
+    UPDATE_IF_EXISTS="1"
 
 RUN addgroup -S -g 1000 app \
  && adduser -S -u 1000 -G app -s /bin/sh -D app \
@@ -22,19 +24,21 @@ WORKDIR /app
 
 COPY --chown=app:app ./requirements /app/requirements/
 
-RUN apk add --no-cache libxml2 libxslt \
+RUN apk add --no-cache libxml2 libxslt postgresql-libs \
  && apk add --no-cache --virtual .build-deps \
                 gcc \
                 libc-dev \
                 libxml2-dev \
                 libxslt-dev \
-                wget \
+                musl-dev \
                 openssl \
+                postgresql-dev \
+                python3-dev \
+                wget \
  && wget --retry-connrefused https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
  && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
- && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-
-RUN pip install --no-cache-dir -r requirements/base.txt $(test "$ENVIRONMENT" == "development" && echo "-r requirements/dev.txt") \
+ && pip install --no-cache-dir -r requirements/base.txt $(test "$ENVIRONMENT" == "development" && echo "-r requirements/dev.txt") \
+ && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
  && apk --purge del .build-deps \
  && rm -rf /var/cache/apk/*
 

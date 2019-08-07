@@ -3,7 +3,7 @@ import asyncio
 from aiohttp import web
 
 from jibrel_notable_accounts.monitoring import handlers
-from jibrel_notable_accounts.middlewares import cors_middleware
+from jibrel_notable_accounts.common.middlewares import cors_middleware
 
 
 def make_app(loop: asyncio.AbstractEventLoop) -> web.Application:

@@ -12,6 +12,11 @@ from concurrent import futures
 from typing import List, Any, Tuple, DefaultDict, Dict, Set
 
 from jibrel_notable_accounts import settings
+from jibrel_notable_accounts.common.db import DatabaseService
+from jibrel_notable_accounts.parser.database_queries import (
+    insert_or_update_notable_account,
+    insert_or_skip_notable_account,
+)
 from jibrel_notable_accounts.parser.utils import parsing
 from jibrel_notable_accounts.parser.utils import http
 
@@ -26,10 +31,15 @@ class ParserService(mode.Service):
     ACCOUNTS_LIST_URL_XPATH = "//div[@class='dropdown']/div/a[contains(text(), 'Accounts')]"
     ACCOUNT_ROW_XPATH = "//table/tbody/tr[td and not(td/div[text() = 'There are no matching entries'])]"
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, db_dsn: str, update_if_exists: bool, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
+        self.database = DatabaseService(dsn=db_dsn)
+        self.update_if_exists = update_if_exists
         self.executor = futures.ThreadPoolExecutor(max_workers=settings.REQUESTS_MAX_WORKERS)
+
+    def on_init_dependencies(self) -> List[mode.Service]:
+        return [self.database]
 
     @mode.Service.task
     async def parse(self) -> None:
@@ -82,7 +92,20 @@ class ParserService(mode.Service):
 
         return accounts_deduped
 
-    async def write_accounts(self, accounts: List[NotableAccount]) -> None: ...
+    async def write_accounts(self, accounts: List[NotableAccount]) -> None:
+        coros = list()
+
+        for account in accounts:
+            coros.append(self.write_account(account))
+
+        await asyncio.gather(*coros)
+
+    async def write_account(self, account: NotableAccount) -> None:
+        query_func = insert_or_update_notable_account if self.update_if_exists else insert_or_skip_notable_account
+        query = query_func(account)
+
+        async with self.database.engine.acquire() as conn:
+            await conn.execute(query)
 
     async def _get_raw_accounts_from_pages(self, account_list: AccountList) -> List[RawNotableAccount]:
         logger.info(
