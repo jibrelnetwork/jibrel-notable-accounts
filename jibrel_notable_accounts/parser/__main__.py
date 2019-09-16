@@ -4,8 +4,8 @@ import sentry_sdk
 
 from jibrel_notable_accounts import settings
 from jibrel_notable_accounts.common import logs
-from jibrel_notable_accounts.monitoring.app import make_app
-from jibrel_notable_accounts.monitoring.service import ApiService
+from jibrel_notable_accounts.parser.app import make_app
+from jibrel_notable_accounts.common.api import ApiService
 from jibrel_notable_accounts.monitoring.stats import setup_parser_metrics
 from jibrel_notable_accounts.parser.service import ParserService
 

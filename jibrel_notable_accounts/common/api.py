@@ -1,10 +1,9 @@
-from asyncio import AbstractEventLoop
 from typing import Any, Callable
 
 import mode
 from aiohttp import web
 
-AppMaker = Callable[[AbstractEventLoop], web.Application]
+AppMaker = Callable[[], web.Application]
 
 
 class ApiService(mode.Service):
@@ -13,7 +12,7 @@ class ApiService(mode.Service):
 
         super().__init__(**kwargs)
 
-        self.app = app_maker(self.loop)
+        self.app = app_maker()
         self.runner = web.AppRunner(self.app)
 
     async def on_start(self) -> None:

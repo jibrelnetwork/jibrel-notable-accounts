@@ -2,7 +2,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Query
 
 from jibrel_notable_accounts.common.tables import notable_accounts_t
-from jibrel_notable_accounts.parser.utils.structs import NotableAccount
+from jibrel_notable_accounts.parser.structs import NotableAccount
 
 
 def insert_or_update_notable_account(notable_account: NotableAccount) -> Query:

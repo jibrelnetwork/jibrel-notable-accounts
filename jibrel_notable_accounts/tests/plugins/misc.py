@@ -6,8 +6,7 @@ from aiohttp.test_utils import TestClient
 from jibrel_notable_accounts import settings
 from pytest_mock import MockFixture
 
-from jibrel_notable_accounts.monitoring.app import make_app
-
+from jibrel_notable_accounts.parser.app import make_app
 from typing import Any, AsyncGenerator, Generator
 
 import pytest
@@ -50,8 +49,8 @@ def executor() -> Generator[ThreadPoolExecutor, None, None]:
 
 
 @pytest.fixture
-def cli(loop: AbstractEventLoop, aiohttp_client: AiohttpClient) -> TestClient:
-    return loop.run_until_complete(aiohttp_client(make_app(loop)))
+def parser_cli(loop: AbstractEventLoop, aiohttp_client: AiohttpClient) -> TestClient:
+    return loop.run_until_complete(aiohttp_client(make_app()))
 
 
 @pytest.fixture()
