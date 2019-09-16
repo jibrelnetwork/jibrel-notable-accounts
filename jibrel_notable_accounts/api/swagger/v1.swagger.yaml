@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is Notable Accounts API.
+  version: "0.0.1"
+  title: Notable Accounts API
+  contact:
+    email: dev@jibrel.network
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+externalDocs:
+  description: Find out more about Notable Accounts service
+  url: 'https://jibrelnetwork.atlassian.net/wiki/spaces/JSEARCH/pages/971472939/Jibrel+Notable+Accounts'
+servers:
+  - url: /
+paths:
+  /v1/labels:
+    post:
+      summary: Get a list of labels for addresses.
+      operationId: getAddressesLabels
+      parameters:
+        - name: addresses
+          in: query
+          description: Comma separated list of the ethereum addresses.
+          required: false
+          schema:
+            type: string
+          example: ""
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '400':
+          description: Invalid Order
+components:
+  schemas:
+    Label:
+      type: string
+      example: "Exchange"
+    Labels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+      example: ["Binance", "Exchange"]
+    Error:
+      type: object
+      properties:
+        field:
+          type: string
+          example: "addresses"
+        code:
+          type: string
+          example: "VALIDATION_ERROR"
+        message:
+          type: string
+          example: "bad input parameter"
+    Errors:
+      type: array
+      items:
+        $ref: '#/components/schemas/Error'
+    AddressLabels:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Binance 1"
+        labels:
+          $ref: '#/components/schemas/Labels'
+    Data:
+      type: object
+      properties:
+        "0xEth_address":
+          $ref: '#/components/schemas/AddressLabels'
+    Status:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        errors:
+          $ref: '#/components/schemas/Errors'
+    Response:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        data:
+          $ref: '#/components/schemas/Data'
