@@ -5,6 +5,7 @@ import mode
 
 from aiopg import sa
 from sqlalchemy.exc import OperationalError
+from sqlalchemy.orm import Query
 
 
 class DatabaseService(mode.Service):
@@ -23,3 +24,23 @@ class DatabaseService(mode.Service):
         self.engine.close()
 
         await self.engine.wait_closed()
+
+    async def execute(self, query: Query, *params: Any) -> Any:
+        async with self.engine.acquire() as connection:
+            result = await connection.execute(query, params)
+
+        return result
+
+    async def fetch_all(self, query: Query, *params: Any) -> Any:
+        async with self.engine.acquire() as connection:
+            cursor = await connection.execute(query, params)
+            result = await cursor.fetchall()
+
+        return result
+
+    async def fetch_one(self, query: Query, *params: Any) -> Any:
+        async with self.engine.acquire() as connection:
+            cursor = await connection.execute(query, params)
+            result = await cursor.fetchone()
+
+        return result

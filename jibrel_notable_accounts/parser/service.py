@@ -104,8 +104,7 @@ class ParserService(mode.Service):
         query_func = insert_or_update_notable_account if self.update_if_exists else insert_or_skip_notable_account
         query = query_func(account)
 
-        async with self.database.engine.acquire() as conn:
-            await conn.execute(query)
+        await self.database.execute(query)
 
     async def _get_raw_accounts_from_pages(self, account_list: AccountList) -> List[RawNotableAccount]:
         logger.info(
