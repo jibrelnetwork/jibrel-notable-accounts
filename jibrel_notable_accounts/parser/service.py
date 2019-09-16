@@ -20,7 +20,7 @@ from jibrel_notable_accounts.parser.database_queries import (
 from jibrel_notable_accounts.parser.utils import parsing
 from jibrel_notable_accounts.parser.utils import http
 
-from jibrel_notable_accounts.parser.utils.structs import AccountList, NotableAccount, RawNotableAccount
+from jibrel_notable_accounts.parser.structs import AccountList, NotableAccount, RawNotableAccount
 
 logger = logging.getLogger(__name__)
 

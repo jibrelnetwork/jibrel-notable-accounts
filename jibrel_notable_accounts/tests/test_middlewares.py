@@ -10,8 +10,8 @@ from aiohttp.test_utils import TestClient
             ('Access-Control-Request-Method', 'POST, GET, OPTIONS, HEAD'),
     )
 )
-async def test_cors_headers_are_present(cli: TestClient, name: str, expected: str) -> None:
-    response = await cli.get('/healthcheck')
+async def test_cors_headers_are_present_for_parser(parser_cli: TestClient, name: str, expected: str) -> None:
+    response = await parser_cli.get('/healthcheck')
     response_header = response.headers[name]
 
     assert response_header == expected

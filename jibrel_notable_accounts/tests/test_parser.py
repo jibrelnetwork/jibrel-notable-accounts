@@ -5,7 +5,7 @@ from requests_mock import Mocker
 
 from jibrel_notable_accounts import settings
 from jibrel_notable_accounts.common.tables import notable_accounts_t
-from jibrel_notable_accounts.parser.utils.structs import NotableAccount, AccountList
+from jibrel_notable_accounts.parser.structs import NotableAccount, AccountList
 from jibrel_notable_accounts.tests.plugins.types import HtmlGetter
 
 from jibrel_notable_accounts.parser.service import ParserService

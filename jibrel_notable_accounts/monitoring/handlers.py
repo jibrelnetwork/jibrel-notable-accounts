@@ -1,30 +1,29 @@
+from typing import Callable, Awaitable
+
 import prometheus_client
+
 from aiohttp import web
 
-from jibrel_notable_accounts.monitoring import stats
+from jibrel_notable_accounts.monitoring.structs import Healthchecker
+
+AiohttpHandler = Callable[[web.Request], Awaitable[web.Response]]
 
 
-async def healthcheck(request: web.Request) -> web.Response:
-    proxy_is_healthy = await stats.is_proxy_healthy()
-    loop_is_healthy = await stats.is_loop_healthy()
+def make_healthcheck(*healthcheckers: Healthchecker) -> AiohttpHandler:
+    async def healthcheck(request: web.Request) -> web.Response:
+        data = {}
 
-    healthy = all(
-        (
-            proxy_is_healthy,
-            loop_is_healthy,
-        )
-    )
+        for healthchecker in healthcheckers:
+            data[healthchecker.key] = await healthchecker.func()
 
-    data = {
-        'healthy': healthy,
-        'isProxyHealthy': proxy_is_healthy,
-        'isLoopHealthy': loop_is_healthy,
-    }
+        healthy = all(data.values())
 
-    status = 200 if healthy else 400
-    data['healthy'] = healthy
+        status = 200 if healthy else 400
+        data['healthy'] = healthy
 
-    return web.json_response(data=data, status=status)
+        return web.json_response(data=data, status=status)
+
+    return healthcheck
 
 
 async def metrics(request: web.Request) -> web.Response:
