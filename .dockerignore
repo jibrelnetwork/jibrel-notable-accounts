@@ -9,3 +9,8 @@ __pycache__
 Dockerfile
 docker-compose.yml
 docker-compose.override.yml
+
+
+# Dev-tools configuration.
+!.coveragerc
+!.flake8
