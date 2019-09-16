@@ -8,6 +8,13 @@ wait_db_ready () {
 
 if [ "$1" = "jibrel-notable-accounts-parser" ]; then
     wait_db_ready
+elif [ "$1" = "app" ]; then
+    wait_db_ready
 fi
 
-exec "$@"
+
+if [ "$1" = "app" ]; then
+    gunicorn -c gunicorn-conf.py jibrel_notable_accounts.api.app:make_app
+else
+    exec "$@"
+fi
