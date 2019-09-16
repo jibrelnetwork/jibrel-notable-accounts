@@ -2,6 +2,61 @@ openapi: 3.0.0
 info:
   description: |
     This is Notable Accounts API.
+
+    **Common information**
+
+    **Requests and Responses**
+
+    Response body of any call can be is an empty string or JSON object, like:
+
+    Successful case
+
+    ```
+    {
+      'status': {
+        'success': true,
+        'errors': [],
+      },
+      "data": [...],
+    }
+    ```
+
+    Error case
+
+    ```
+    {
+      'status': {
+        'success': false,
+        'errors': [
+            ...
+        ],
+      }
+    }
+    ```
+
+    **API errors**
+
+    * All 400 series errors will be returned with a JSON object including an array of errors in the body and a application/json content type.
+
+    ```
+    {
+      'status': {
+          'success': false,
+          'errors': [
+              {
+                'field': 'SOME_FIELD_NAME',
+                'code': 'SOME_ERR_TEXT_CODE',
+                'message': 'some err text'
+              }
+          ],
+      }
+    }
+    ```
+
+    **note**: `status.success` is just a human-readable way of obtaining the result of a response. There could be no cases when 400 series error is returned and `status.success` equals `true` and vice versa. In other words, HTTP Status Code is duplicated like this: `status.success = (code === 200)`.
+
+    * 500 series error codes do not return JSON bodies.
+
   version: "0.0.1"
   title: Notable Accounts API
   contact:
