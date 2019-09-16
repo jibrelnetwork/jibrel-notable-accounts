@@ -1,4 +1,6 @@
+import logging.config
 import sys
+
 from typing import Dict, Any
 
 
@@ -33,3 +35,12 @@ def get_config(log_level: str, formatter_class: str) -> Dict[str, Any]:
             }
         }
     }
+
+
+def configure(log_level: str, no_json_formatter: bool) -> None:
+    logging.config.dictConfig(
+        get_config(
+            log_level=log_level,
+            formatter_class=get_formatter_class(no_json_formatter),
+        )
+    )
