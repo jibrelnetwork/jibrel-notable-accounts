@@ -59,7 +59,10 @@ def parser_cli(loop: AbstractEventLoop, aiohttp_client: AiohttpClient) -> TestCl
 
 @pytest.fixture
 def cli(loop: AbstractEventLoop, aiohttp_client: AiohttpClient) -> TestClient:
-    return loop.run_until_complete(aiohttp_client(make_app()))
+    app = loop.run_until_complete(make_app())
+    client = loop.run_until_complete(aiohttp_client(app))
+
+    return client
 
 
 @pytest.fixture()

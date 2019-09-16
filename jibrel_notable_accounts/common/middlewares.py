@@ -1,12 +1,10 @@
-from typing import Callable, Awaitable
-
 from aiohttp import web
 
-Handler = Callable[[web.Request], Awaitable[web.Response]]
+from jibrel_notable_accounts.common.types import AiohttpHandler
 
 
 @web.middleware
-async def cors_middleware(request: web.Request, handler: Handler) -> web.Response:
+async def cors_middleware(request: web.Request, handler: AiohttpHandler) -> web.Response:
     response = await handler(request)
 
     response.headers['Access-Control-Allow-Headers'] = '*'

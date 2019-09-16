@@ -1,8 +1,10 @@
 import functools
 
 from aiohttp import web
+from jibrel_notable_accounts.api.handlers import get_labels
 
 from jibrel_notable_accounts import settings
+from jibrel_notable_accounts.api.middlewares import catch_api_error_middleware
 from jibrel_notable_accounts.common.db import DatabaseService
 from jibrel_notable_accounts.monitoring import stats
 
@@ -11,12 +13,14 @@ from jibrel_notable_accounts.common.middlewares import cors_middleware
 from jibrel_notable_accounts.monitoring.structs import Healthchecker
 
 
-def make_app() -> web.Application:
-    app = web.Application(middlewares=[cors_middleware])
+async def make_app() -> web.Application:
+    app = web.Application(middlewares=[cors_middleware, catch_api_error_middleware])
     app['db'] = DatabaseService(dsn=settings.DB_DSN)
 
     app.on_startup.append(on_startup)
     app.on_shutdown.append(on_shutdown)
+
+    app.router.add_route('GET', '/v1/labels', get_labels)
 
     app.router.add_route('GET', '/metrics', metrics)
     app.router.add_route('GET', '/healthcheck', make_healthcheck(
