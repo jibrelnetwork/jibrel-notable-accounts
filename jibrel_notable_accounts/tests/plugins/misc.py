@@ -3,6 +3,9 @@ from asyncio import AbstractEventLoop
 from concurrent.futures.thread import ThreadPoolExecutor
 
 from aiohttp.test_utils import TestClient
+from click.testing import CliRunner
+from prometheus_client import CollectorRegistry
+
 from jibrel_notable_accounts import settings
 from pytest_mock import MockFixture
 
@@ -77,3 +80,16 @@ def get_html() -> HtmlGetter:
 def mock_sleepers(mocker: MockFixture) -> None:
     mocker.patch('asyncio.sleep')
     mocker.patch('time.sleep')
+
+
+@pytest.fixture()
+def cli_runner() -> CliRunner:
+    return CliRunner()
+
+
+@pytest.fixture(autouse=True)
+def disable_metrics_setup(mocker: MockFixture) -> None:
+    # Metrics setup contributes to a 'prometheus_client.registry.REGISTRY'
+    # singleton. If same metric is contributed twice, `ValueError` is raised.
+
+    mocker.patch.object(CollectorRegistry, 'register')
