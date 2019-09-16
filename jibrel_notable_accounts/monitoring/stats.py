@@ -4,7 +4,10 @@ import prometheus_client
 
 from typing import Callable, Awaitable, Any
 
+from sqlalchemy import select
+
 from jibrel_notable_accounts import settings
+from jibrel_notable_accounts.common.db import DatabaseService
 from jibrel_notable_accounts.parser.utils import proxy
 
 logger = logging.getLogger(__name__)
@@ -35,6 +38,11 @@ async def is_proxy_healthy() -> bool:
     proxy_health = round(1 - proxies_faulty_count / proxies_count, 2)
 
     return proxy_health >= settings.HEALTH_THRESHOLD_PROXY
+
+
+@_safe_health
+async def is_db_healthy(db: DatabaseService) -> bool:
+    return await db.fetch_one(select([1])) == (1,)
 
 
 @_safe_health
