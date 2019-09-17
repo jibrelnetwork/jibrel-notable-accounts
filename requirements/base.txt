@@ -6,6 +6,9 @@ click==7.0
 ConfigArgParse==0.13.0
 cssselect
 dsnparse==0.1.12
+Flask-Admin==1.5.3
+Flask-SQLAlchemy==2.4.0
+Flask==1.1.1
 gunicorn==19.9.0
 lxml==4.2.1
 marshmallow==3.1.1
