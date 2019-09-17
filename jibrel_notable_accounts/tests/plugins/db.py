@@ -1,9 +1,13 @@
 import logging
-from typing import Generator, AsyncGenerator
+from asyncio import AbstractEventLoop
+from typing import Generator
 
-import pytest
 import alembic.config
+import pytest
 from aiopg.sa import Engine, create_engine
+from sqlalchemy import create_engine as create_engine_sync
+from sqlalchemy.engine import Engine as EngineSync
+
 from jibrel_notable_accounts import settings
 from jibrel_notable_accounts.common.tables import TABLES
 
@@ -18,16 +22,20 @@ def setup_db() -> Generator[None, None, None]:
 
 
 @pytest.fixture(autouse=True)
-async def truncate_db(sa_engine: Engine) -> AsyncGenerator[None, None]:
+def truncate_db(sa_engine_sync: EngineSync) -> Generator[None, None, None]:
     yield
 
     tables = ",".join([table.name for table in TABLES])
 
-    async with sa_engine.acquire() as conn:
-        await conn.execute(f"TRUNCATE {tables};")
+    with sa_engine_sync.connect() as conn:
+        conn.execute(f"TRUNCATE {tables};")
 
 
-@pytest.mark.asyncio
 @pytest.fixture
-async def sa_engine() -> Engine:
+async def sa_engine(loop: AbstractEventLoop) -> Engine:
     return await create_engine(settings.DB_DSN)
+
+
+@pytest.fixture
+def sa_engine_sync() -> EngineSync:
+    return create_engine_sync(settings.DB_DSN)

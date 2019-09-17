@@ -1,12 +1,9 @@
-from typing import Callable, Awaitable
-
 import prometheus_client
 
 from aiohttp import web
 
+from jibrel_notable_accounts.common.types import AiohttpHandler
 from jibrel_notable_accounts.monitoring.structs import Healthchecker
-
-AiohttpHandler = Callable[[web.Request], Awaitable[web.Response]]
 
 
 def make_healthcheck(*healthcheckers: Healthchecker) -> AiohttpHandler:

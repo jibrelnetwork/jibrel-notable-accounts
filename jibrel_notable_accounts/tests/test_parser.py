@@ -371,7 +371,6 @@ async def test_parser_dedupes_accounts_and_aggregates_accounts_labels(
     }
 
 
-@pytest.mark.asyncio
 async def test_parser_inserts_a_single_item_to_database(
         sa_engine: Engine,
         parser: ParserService,
@@ -399,7 +398,6 @@ async def test_parser_inserts_a_single_item_to_database(
     ]
 
 
-@pytest.mark.asyncio
 async def test_parser_does_not_override_an_item_if_requested(
         parser: ParserService,
         sa_engine: Engine,
@@ -436,7 +434,6 @@ async def test_parser_does_not_override_an_item_if_requested(
     ]
 
 
-@pytest.mark.asyncio
 async def test_parser_overrides_an_item_if_requested(
         parser_with_override: ParserService,
         sa_engine: Engine,
