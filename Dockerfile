@@ -2,7 +2,10 @@ FROM python:3.7-alpine
 
 ARG ENVIRONMENT="production"
 
-ENV API_PORT="8080" \
+ENV ADMIN_PORT="8080" \
+    ADMIN_UI_THEME="sandstone" \
+    ADMIN_SECRET_KEY="" \
+    API_PORT="8080" \
     API_PORT_PARSER="8080" \
     DB_DSN="" \
     DOCKERIZE_VERSION="v0.6.1" \

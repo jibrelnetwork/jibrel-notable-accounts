@@ -15,6 +15,8 @@ fi
 
 if [ "$1" = "app" ]; then
     gunicorn -c gunicorn-conf.py jibrel_notable_accounts.api.app:make_app
+elif [ "$1" = "admin" ]; then
+    gunicorn -c gunicorn-conf-admin.py jibrel_notable_accounts.admin.app:app
 else
     exec "$@"
 fi

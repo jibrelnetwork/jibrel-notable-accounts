@@ -32,6 +32,10 @@ PROXY_LIST = [p.strip() for p in open(PROXY_LIST_PATH, 'r').readlines()]
 USER_AGENT_LIST = [u.strip() for u in open(USER_AGENT_LIST_PATH, 'r').readlines()]
 
 
+ADMIN_SECRET_KEY = os.environ['ADMIN_SECRET_KEY']
+ADMIN_UI_THEME = os.environ['ADMIN_UI_THEME']
+
+
 METRIC_PARSER_LOOP_TASKS_TOTAL = 'jibrel_notable_accounts_parser_loop_tasks_total'
 METRIC_PARSER_PROXY_TOTAL = 'jibrel_notable_accounts_parser_proxy_total'
 METRIC_PARSER_PROXY_FAULTY_TOTAL = 'jibrel_notable_accounts_parser_proxy_faulty_total'
