@@ -10,6 +10,7 @@ from jibrel_notable_accounts import settings
 from pytest_mock import MockFixture
 
 from jibrel_notable_accounts.api.app import make_app
+from jibrel_notable_accounts.common import logs
 from jibrel_notable_accounts.parser.app import make_app as make_parser_app
 from typing import Any, AsyncGenerator, Generator
 
@@ -101,3 +102,8 @@ def disable_metrics_setup(mocker: MockFixture) -> None:
     # singleton. If same metric is contributed twice, `ValueError` is raised.
 
     mocker.patch.object(CollectorRegistry, 'register')
+
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_logs() -> None:
+    logs.configure('DEBUG', no_json_formatter=True)
