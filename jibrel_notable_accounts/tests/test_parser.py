@@ -394,6 +394,7 @@ async def test_parser_inserts_a_single_item_to_database(
             'address': '0x4b1a99467a284cc690e3237bc69105956816f762',
             'name': 'Bitmax 2',
             'labels': ['Exchange'],
+            'is_admin_reviewed': False,
         },
     ]
 
@@ -408,6 +409,7 @@ async def test_parser_does_not_override_an_item_if_requested(
                 'address': '0x8da0d80f5007ef1e431dd2127178d224e32c2ef4',
                 'name': '0x: Token Transfer Proxy',
                 'labels': ['0x Ecosystem'],
+                'is_admin_reviewed': True,
             },
         ))
 
@@ -430,6 +432,7 @@ async def test_parser_does_not_override_an_item_if_requested(
             'address': '0x8da0d80f5007ef1e431dd2127178d224e32c2ef4',
             'name': '0x: Token Transfer Proxy',
             'labels': ['0x Ecosystem'],
+            'is_admin_reviewed': True,
         },
     ]
 
@@ -444,6 +447,7 @@ async def test_parser_overrides_an_item_if_requested(
                 'address': '0x4b1a99467a284cc690e3237bc69105956816f762',
                 'name': 'Bitmax 2',
                 'labels': ['Exchange'],
+                'is_admin_reviewed': True,
             },
         ))
 
@@ -466,5 +470,6 @@ async def test_parser_overrides_an_item_if_requested(
             'address': '0x4b1a99467a284cc690e3237bc69105956816f762',
             'name': 'NEW NAME FOR A TOKEN',
             'labels': ['0x Ecosystem', 'ANOTHER LABEL'],
+            'is_admin_reviewed': False,
         },
     ]

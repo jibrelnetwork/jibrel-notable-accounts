@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = settings.ADMIN_SECRET_KEY
 
 app.config['SQLALCHEMY_DATABASE_URI'] = settings.DB_DSN
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['FLASK_ADMIN_SWATCH'] = settings.ADMIN_UI_THEME
 
 db = SQLAlchemy(app)
