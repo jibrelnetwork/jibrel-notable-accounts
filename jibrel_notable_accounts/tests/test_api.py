@@ -93,3 +93,33 @@ async def test_get_labels_returns_selected_entries_in_db_if_addresses_are_specif
             },
         }
     }
+
+
+async def test_get_labels_returns_selected_entries_in_db_with_query_case_insensitive(
+        cli: TestClient,
+        sa_engine: Engine,
+) -> None:
+    async with sa_engine.acquire() as conn:
+        await conn.execute(notable_accounts_t.insert().values(
+            {
+                'address': '0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be',
+                'name': 'Binance 1',
+                'labels': ['Binance', 'Exchange'],
+            },
+        ))
+
+    response = await cli.get('/v1/labels?addresses=0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE')
+    response_json = await response.json()
+
+    assert response_json == {
+        'status': {
+            'success': True,
+            'errors': [],
+        },
+        'data': {
+            '0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be': {
+                'name': 'Binance 1',
+                'labels': ['Binance', 'Exchange'],
+            },
+        }
+    }
