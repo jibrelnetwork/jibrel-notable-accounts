@@ -185,7 +185,7 @@ class ParserService(mode.Service):
                 continue
 
             accounts_deduped[raw_account.address] = NotableAccount(
-                address=raw_account.address,
+                address=raw_account.address.lower(),
                 name=raw_account.name,
                 labels=tuple(sorted(accounts_labels[raw_account.address])),
             )
