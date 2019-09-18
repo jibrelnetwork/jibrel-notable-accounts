@@ -26,8 +26,15 @@ class NotableAccount(db.Model):  # type: ignore
 
 class NotableAccountView(ModelView):
     column_display_pk = True
-    column_searchable_list = ('address', 'name', 'labels')
-    column_filters = ('address', 'name')
+    column_searchable_list = ('address', 'name')
+    column_sortable_list = ('address', 'name', 'labels', 'is_admin_reviewed')
+
+    column_default_sort = [('name', True), ('address', True)]
+    column_filters = ('address', 'name', 'is_admin_reviewed')
+
+    can_set_page_size = True
+
+    form_columns = ('address', 'name', 'labels', 'is_admin_reviewed')
 
     @action('review', 'Review', 'Are you sure you want to review selected accounts?')
     def review_accounts(self, ids: List[str]):

@@ -3,7 +3,7 @@ FROM python:3.7-alpine
 ARG ENVIRONMENT="production"
 
 ENV ADMIN_PORT="8080" \
-    ADMIN_UI_THEME="sandstone" \
+    ADMIN_UI_THEME="simplex" \
     ADMIN_SECRET_KEY="" \
     API_PORT="8080" \
     API_PORT_PARSER="8080" \
