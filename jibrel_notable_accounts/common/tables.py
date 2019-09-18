@@ -10,6 +10,7 @@ notable_accounts_t = sa.Table(
     sa.Column('address', sa.String, primary_key=True),
     sa.Column('name', sa.String),
     sa.Column('labels', postgresql.ARRAY(sa.String)),
+    sa.Column('is_admin_reviewed', sa.Boolean, default=False),
 )
 
 
