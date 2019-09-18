@@ -1,9 +1,13 @@
+from typing import List
+
 from flask import Flask
 from flask_admin import Admin
+from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
 from flask_sqlalchemy import SQLAlchemy
 
 from jibrel_notable_accounts import settings
+from jibrel_notable_accounts.admin.database_queries import update_is_admin_reviewed_true, update_is_admin_reviewed_false
 from jibrel_notable_accounts.common.tables import notable_accounts_t
 
 app = Flask(__name__)
@@ -24,6 +28,16 @@ class NotableAccountView(ModelView):
     column_display_pk = True
     column_searchable_list = ('address', 'name', 'labels')
     column_filters = ('address', 'name')
+
+    @action('review', 'Review', 'Are you sure you want to review selected accounts?')
+    def review_accounts(self, ids: List[str]):
+        with db.engine.connect() as conn:
+            conn.execute(update_is_admin_reviewed_true(ids))
+
+    @action('unreview', 'Unreview', 'Are you sure you want to unreview selected accounts?')
+    def unreview_accounts(self, ids: List[str]):
+        with db.engine.connect() as conn:
+            conn.execute(update_is_admin_reviewed_false(ids))
 
 
 admin = Admin(app, name='Jibrel Notable Accounts Admin', template_mode='bootstrap3')
