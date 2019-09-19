@@ -1,0 +1,65 @@
+version: "3.7"
+
+services:
+  api:
+    build:
+      context: .
+    image: jibrel/notable-accounts-api
+    environment:
+      DB_DSN: postgres://postgres:postgres@db:5432/db
+    depends_on:
+      - db
+    command: app
+  admin:
+    build:
+      context: .
+    image: jibrel/notable-accounts-api
+    environment:
+      DB_DSN: postgres://postgres:postgres@db:5432/db
+    depends_on:
+      - db
+    command: admin
+  parser:
+    build:
+      context: .
+    image: jibrel/notable-accounts-parser
+    environment:
+      DB_DSN: postgres://postgres:postgres@db:5432/db
+    depends_on:
+      - db
+    command: jibrel-notable-accounts-parser
+
+  dev:
+    build:
+      args:
+        ENVIRONMENT: development
+      context: .
+    image: jibrel/notable-accounts-dev
+    environment:
+      DB_DSN: postgres://postgres:postgres@db_dev:5432/db
+    depends_on:
+      - db_dev
+    volumes:
+      - ./:/app
+
+  db:
+    image: postgres:11-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+
+  db_dev:
+    image: postgres:11-alpine
+    volumes:
+      - db_dev_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+
+volumes:
+  db_data:
+  db_dev_data:
