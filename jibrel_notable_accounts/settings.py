@@ -12,7 +12,7 @@ NO_JSON_FORMATTER = bool(int(os.environ['NO_JSON_FORMATTER']))
 UPDATE_IF_EXISTS = bool(int(os.environ['UPDATE_IF_EXISTS']))
 
 DB_DSN = os.environ['DB_DSN']
-RAVEN_DSN = os.environ['RAVEN_DSN']
+SENTRY_DSN = os.environ['SENTRY_DSN']
 
 NOTABLE_ACCOUNTS_PARSE_ONCE_DELAY = int(os.environ['NOTABLE_ACCOUNTS_PARSE_ONCE_DELAY'])
 REQUESTS_MAX_WORKERS = int(os.environ['REQUESTS_MAX_WORKERS'])
@@ -38,6 +38,8 @@ ADMIN_BASIC_AUTH_PASSWORD = os.environ['ADMIN_BASIC_AUTH_PASSWORD']
 ADMIN_SECRET_KEY = os.environ['ADMIN_SECRET_KEY']
 ADMIN_UI_THEME = os.environ['ADMIN_UI_THEME']
 
+
+METRIC_API_LOOP_TASKS_TOTAL = 'jibrel_notable_accounts_api_loop_tasks_total'
 
 METRIC_PARSER_LOOP_TASKS_TOTAL = 'jibrel_notable_accounts_parser_loop_tasks_total'
 METRIC_PARSER_PROXY_TOTAL = 'jibrel_notable_accounts_parser_proxy_total'

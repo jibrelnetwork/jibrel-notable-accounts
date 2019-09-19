@@ -1,9 +1,13 @@
+import sentry_sdk
+
 from flask import Flask
 from flask_admin import Admin
 from flask_basicauth import BasicAuth
 from flask_sqlalchemy import SQLAlchemy
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from jibrel_notable_accounts import settings
+from jibrel_notable_accounts.common import logs
 
 app = Flask(__name__)
 app.secret_key = settings.ADMIN_SECRET_KEY
@@ -25,3 +29,7 @@ from jibrel_notable_accounts.admin.model_views import notable_account_view  # NO
 
 admin = Admin(app, name='Jibrel Notable Accounts Admin', template_mode='bootstrap3')
 admin.add_view(notable_account_view)
+
+
+logs.configure(log_level=settings.LOG_LEVEL, no_json_formatter=settings.NO_JSON_FORMATTER)
+sentry_sdk.init(settings.SENTRY_DSN, integrations=[FlaskIntegration()])
