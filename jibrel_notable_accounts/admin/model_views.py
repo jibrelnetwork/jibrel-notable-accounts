@@ -25,14 +25,14 @@ class NotableAccountView(ModelView):
     form_columns = ('address', 'name', 'labels', 'is_admin_reviewed')
 
     @action('review', 'Review', 'Are you sure you want to review selected accounts?')
-    def review_accounts(self, ids: List[str]):
+    def review_accounts(self, ids: List[str]) -> None:
         with db.engine.connect() as conn:
             conn.execute(update_is_admin_reviewed_true(ids))
 
     @action('unreview', 'Unreview', 'Are you sure you want to unreview selected accounts?')
-    def unreview_accounts(self, ids: List[str]):
+    def unreview_accounts(self, ids: List[str]) -> None:
         with db.engine.connect() as conn:
             conn.execute(update_is_admin_reviewed_false(ids))
 
 
-notable_account_view = NotableAccountView(NotableAccount, db.session)
+notable_account_view = NotableAccountView(NotableAccount, db.session)  # type: ignore

@@ -371,6 +371,26 @@ async def test_parser_dedupes_accounts_and_aggregates_accounts_labels(
     }
 
 
+async def test_parser_lowers_checksum_accounts_addresses(
+        parser: ParserService,
+        requests_mock: Mocker,
+        get_html: HtmlGetter,
+) -> None:
+
+    lists = [
+        AccountList(url='/accounts/label/checksummed', label='Checksummed'),
+    ]
+
+    requests_mock.register_uri('GET', f'{settings.ES_BASE_URL}/accounts/label/checksummed/1', text=get_html('checksummed-list.html'))  # NOQA: E501
+    requests_mock.register_uri('GET', f'{settings.ES_BASE_URL}/accounts/label/checksummed/2', text=get_html('generic-account-list-empty.html'))  # NOQA: E501
+
+    accounts = await parser.get_accounts(lists)
+
+    assert set(accounts) == {
+        NotableAccount(address='0xf5673c0ad28ca6a0064670ce1fe2a73ce847c74f', name='Pieta Token', labels=('Checksummed',)),  # NOQA: E501
+    }
+
+
 async def test_parser_inserts_a_single_item_to_database(
         sa_engine: Engine,
         parser: ParserService,

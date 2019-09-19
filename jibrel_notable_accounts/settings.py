@@ -32,6 +32,9 @@ PROXY_LIST = [p.strip() for p in open(PROXY_LIST_PATH, 'r').readlines()]
 USER_AGENT_LIST = [u.strip() for u in open(USER_AGENT_LIST_PATH, 'r').readlines()]
 
 
+ADMIN_BASIC_AUTH_FORCE = bool(int(os.environ['ADMIN_BASIC_AUTH_FORCE']))
+ADMIN_BASIC_AUTH_USERNAME = os.environ['ADMIN_BASIC_AUTH_USERNAME']
+ADMIN_BASIC_AUTH_PASSWORD = os.environ['ADMIN_BASIC_AUTH_PASSWORD']
 ADMIN_SECRET_KEY = os.environ['ADMIN_SECRET_KEY']
 ADMIN_UI_THEME = os.environ['ADMIN_UI_THEME']
 
