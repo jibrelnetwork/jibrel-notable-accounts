@@ -39,6 +39,8 @@ ADMIN_SECRET_KEY = os.environ['ADMIN_SECRET_KEY']
 ADMIN_UI_THEME = os.environ['ADMIN_UI_THEME']
 
 
+METRIC_API_LOOP_TASKS_TOTAL = 'jibrel_notable_accounts_api_loop_tasks_total'
+
 METRIC_PARSER_LOOP_TASKS_TOTAL = 'jibrel_notable_accounts_parser_loop_tasks_total'
 METRIC_PARSER_PROXY_TOTAL = 'jibrel_notable_accounts_parser_proxy_total'
 METRIC_PARSER_PROXY_FAULTY_TOTAL = 'jibrel_notable_accounts_parser_proxy_faulty_total'

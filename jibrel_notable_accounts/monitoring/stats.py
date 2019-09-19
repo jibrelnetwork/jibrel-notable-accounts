@@ -57,6 +57,10 @@ def get_proxies_faulty_count() -> int:
     return proxies_faulty_count
 
 
+def setup_api_metrics() -> None:
+    _setup_loop_tasks_total_metric(settings.METRIC_API_LOOP_TASKS_TOTAL)
+
+
 def setup_parser_metrics() -> None:
     _setup_loop_tasks_total_metric(settings.METRIC_PARSER_LOOP_TASKS_TOTAL)
     _setup_proxy_total_metric(settings.METRIC_PARSER_PROXY_TOTAL)
