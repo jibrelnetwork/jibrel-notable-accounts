@@ -72,7 +72,7 @@ servers:
 paths:
   /v1/labels:
     post:
-      summary: Get a list of labels for addresses.
+      summary: Get a list of labels for addresses. If addresses are not provided, all of available account will be returned.
       operationId: getAddressesLabels
       parameters:
         - name: addresses
@@ -90,7 +90,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Response'
         '400':
-          description: Invalid Order
+          description: invalid operation
 components:
   schemas:
     Label:
