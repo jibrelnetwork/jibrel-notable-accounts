@@ -15,7 +15,7 @@ from jibrel_notable_accounts.parser.service import ParserService
 @click.option('--no-json-formatter', is_flag=True, default=settings.NO_JSON_FORMATTER, help='Use default formatter')
 @click.option('--update-if-exists', is_flag=True, default=settings.UPDATE_IF_EXISTS, help='Update account if exists')
 def main(log_level: str, update_if_exists: bool, no_json_formatter: bool) -> None:
-    sentry_sdk.init(settings.RAVEN_DSN)
+    sentry_sdk.init(settings.SENTRY_DSN)
     setup_parser_metrics()
 
     mode.Worker(

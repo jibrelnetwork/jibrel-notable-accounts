@@ -32,4 +32,4 @@ admin.add_view(notable_account_view)
 
 
 logs.configure(log_level=settings.LOG_LEVEL, no_json_formatter=settings.NO_JSON_FORMATTER)
-sentry_sdk.init(settings.RAVEN_DSN, integrations=[FlaskIntegration()])
+sentry_sdk.init(settings.SENTRY_DSN, integrations=[FlaskIntegration()])

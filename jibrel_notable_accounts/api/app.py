@@ -32,7 +32,7 @@ async def make_app() -> web.Application:
     ))
 
     logs.configure(log_level=settings.LOG_LEVEL, no_json_formatter=settings.NO_JSON_FORMATTER)
-    sentry_sdk.init(settings.RAVEN_DSN, integrations=[AioHttpIntegration()])
+    sentry_sdk.init(settings.SENTRY_DSN, integrations=[AioHttpIntegration()])
     setup_api_metrics()
 
     return app
