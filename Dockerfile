@@ -21,7 +21,7 @@ ENV ADMIN_BASIC_AUTH_FORCE="1" \
     PROXY_USER="" \
     SENTRY_DSN="" \
     REQUESTS_MAX_WORKERS="10" \
-    UPDATE_IF_EXISTS="1"
+    UPDATE_IF_EXISTS="0"
 
 RUN addgroup -S -g 1000 app \
  && adduser -S -u 1000 -G app -s /bin/sh -D app \
