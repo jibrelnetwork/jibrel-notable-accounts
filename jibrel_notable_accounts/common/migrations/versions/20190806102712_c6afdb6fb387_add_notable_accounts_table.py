@@ -18,7 +18,8 @@ UP_SQL = """
 CREATE TABLE notable_accounts (
     address CHARACTER VARYING NOT NULL,
     name CHARACTER VARYING NOT NULL,
-    labels CHARACTER VARYING[] NOT NULL
+    labels CHARACTER VARYING[] NOT NULL,
+    is_admin_reviewed BOOLEAN NOT NULL DEFAULT false
 );
 
 ALTER TABLE ONLY notable_accounts

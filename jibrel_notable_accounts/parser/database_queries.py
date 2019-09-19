@@ -15,6 +15,7 @@ def insert_or_update_notable_account(notable_account: NotableAccount) -> Query:
         set_={
             'name': insert_query.excluded.name,
             'labels': insert_query.excluded.labels,
+            'is_admin_reviewed': insert_query.excluded.is_admin_reviewed,
         },
     )
 
