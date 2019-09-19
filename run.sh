@@ -6,10 +6,20 @@ wait_db_ready () {
     dockerize -wait tcp://"$(python -c 'import dsnparse; p = dsnparse.parse_environ("DB_DSN"); print(p.hostloc)')"
 }
 
+migrate_db () {
+    alembic upgrade head
+}
+
+
 if [ "$1" = "jibrel-notable-accounts-parser" ]; then
     wait_db_ready
+    migrate_db
 elif [ "$1" = "app" ]; then
     wait_db_ready
+    migrate_db
+elif [ "$1" = "admin" ]; then
+    wait_db_ready
+    migrate_db
 fi
 
 
