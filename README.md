@@ -6,9 +6,13 @@ accounts.
 
 ## Description
 
-Service includes a parser which scans https://etherscan.io/labelCloud/ page,
+Service includes multiple components:
+* **Parser** — scans https://etherscan.io/labelCloud/ page,
 goes to lists of accounts and grabs its' names as well as aggregates labels
 (Mining, Exchange, etc.).
+* **Admin** — provides a way to review scanned accounts as well as a CRUD
+interface for them.
+* **API** — provides scanned and reviewed accounts for clients.
 
 
 ## Prerequisites
@@ -27,6 +31,22 @@ All environmental variables with its' defaults can be found in the `Dockerfile`.
 
 > Credentials for **Proxyrack** can be found in company's **1Password** vault.
 
+
+## Running
+
+Run components one-by-one:
+
+```bash
+docker-compose up api
+docker-compose up admin
+docker-compose up parser
+```
+
+Run everything in a background:
+
+```bash
+docker-compose up -d
+```
 
 ## Devtools
 
