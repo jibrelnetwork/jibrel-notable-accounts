@@ -4,6 +4,9 @@ import pathlib
 BASE_DIR = pathlib.Path(__file__).parent.parent
 PROJECT_DIR = BASE_DIR / 'jibrel_notable_accounts'
 
+VERSION_FILE_PATH = PROJECT_DIR / 'version.txt'
+SWAGGER_SPEC_FILE_PATH = PROJECT_DIR / 'api' / 'swagger' / 'v1.swagger.yaml'
+
 PROXY_LIST_PATH = PROJECT_DIR / 'proxy.list'
 USER_AGENT_LIST_PATH = PROJECT_DIR / 'useragents.list'
 
