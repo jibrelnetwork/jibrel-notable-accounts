@@ -71,7 +71,7 @@ servers:
   - url: /
 paths:
   /v1/labels:
-    post:
+    get:
       summary: Get a list of labels for addresses. If addresses are not provided, all of available account will be returned.
       operationId: getAddressesLabels
       parameters:
