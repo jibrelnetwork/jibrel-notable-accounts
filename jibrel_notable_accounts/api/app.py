@@ -2,6 +2,7 @@ import functools
 
 import sentry_sdk
 from aiohttp import web
+from jibrel_aiohttp_swagger import setup_swagger
 from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 
 from jibrel_notable_accounts import settings
@@ -34,6 +35,12 @@ async def make_app() -> web.Application:
     logs.configure(log_level=settings.LOG_LEVEL, no_json_formatter=settings.NO_JSON_FORMATTER)
     sentry_sdk.init(settings.SENTRY_DSN, integrations=[AioHttpIntegration()])
     setup_api_metrics()
+    setup_swagger(
+        app,
+        spec_path=settings.SWAGGER_SPEC_FILE_PATH,
+        api_root='/docs/index.html',
+        version_file_path=settings.VERSION_FILE_PATH,
+    )
 
     return app
 
