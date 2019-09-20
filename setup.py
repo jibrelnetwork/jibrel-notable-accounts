@@ -17,7 +17,7 @@ setup(
     install_requires=[],
     include_package_data=True,
     package_data={
-        "jibrel_notable_accounts": ["*.list"],
+        "jibrel_notable_accounts": ["*.list", "version.txt"],
     },
     entry_points={
         "console_scripts": [
